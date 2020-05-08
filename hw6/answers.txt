@@ -1,0 +1,8 @@
+* push - Does not meet the contract.
+	Counter example: push(null)
+	fix: add @pre o != null
+* pop - meets the contract
+* top - meets the contract
+* isEmpty - Does not meet the contract. 
+	Counter example: and empty list with no elements will return true.
+	change the post condition to: @return == true iff size()==0
