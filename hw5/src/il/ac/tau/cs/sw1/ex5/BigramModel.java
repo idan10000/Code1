@@ -31,14 +31,19 @@ public class BigramModel {
         String[] vocab = new String[MAX_VOCABULARY_SIZE];
         int index = 0;
         String line;
-        while ((line = buffer.readLine()) != null && index <= MAX_VOCABULARY_SIZE) {
+        while ((line = buffer.readLine()) != null) {
             line = line.toLowerCase();
             String[] words = line.split(" ");
-            exchangeNums(words);
-            for (String word :
-                    words) {
-                if ((isLegalWord(word) && !isRepeatWord(word, vocab))) {
-                    vocab[index++] = word.toLowerCase();
+            if (!line.equals("")) {
+                exchangeNums(words);
+                for (String word :
+                        words) {
+                    if (index < MAX_VOCABULARY_SIZE) {
+                        if ((isLegalWord(word) && !isRepeatWord(word, vocab))) {
+                            vocab[index++] = word.toLowerCase();
+                        }
+                    } else
+                        break;
                 }
             }
         }
@@ -48,8 +53,10 @@ public class BigramModel {
 
     private void exchangeNums(String[] words) {
         for (int i = 0; i < words.length; i++) {
-            if (words[i].chars().allMatch(Character::isDigit))
-                words[i] = SOME_NUM;
+            if(!words[i].equals("")) {
+                if (words[i].chars().allMatch(Character::isDigit))
+                    words[i] = SOME_NUM;
+            }
         }
     }
 
@@ -141,30 +148,22 @@ public class BigramModel {
         String[] newVocab = new String[vocabLen];
 
         while ((line = vocBuffer.readLine()) != null) {
-            int split = findSplit(line);
-            newVocab[Integer.parseInt(line.substring(0, split))] = line.substring(split + 1);
+            String[] splitWords = line.split(",", 2);
+            newVocab[Integer.parseInt(splitWords[0])] = splitWords[1];
         }
 
         int[][] wordCount = new int[vocabLen][vocabLen];
         while ((line = countBuffer.readLine()) != null) {
             String[] split = line.split(":");
-            int splitIndex = findSplit(split[0]);
-            wordCount[Integer.parseInt(split[0].substring(0, splitIndex))]
-                    [Integer.parseInt(split[0].substring(splitIndex + 1))]
+            String[] splitWords = split[0].split(",", 2);
+            wordCount[Integer.parseInt(splitWords[0])]
+                    [Integer.parseInt(splitWords[1])]
                     = Integer.parseInt(split[1]);
         }
         mBigramCounts = wordCount;
         mVocabulary = newVocab;
         vocBuffer.close();
         countBuffer.close();
-    }
-
-    private int findSplit(String word) {
-        for (int i = 0; i < word.length(); i++) {
-            if (word.charAt(i) == ',')
-                return i;
-        }
-        return -1;
     }
 
 
@@ -255,10 +254,12 @@ public class BigramModel {
      * other words in vocabulary
      */
     public String getClosestWord(String word) { //  Q - 10
+        if(mVocabulary.length == 1)
+            return null;
         int wordIndex = getWordIndex(word);
         int[] wordVector = mBigramCounts[wordIndex];
         String closestWord = null;
-        double cosineSim = 0;
+        double cosineSim = -1;
         for (int i = 0; i < mVocabulary.length; i++) {
             if (i != wordIndex) {
                 double newConsineSim = calcCosineSim(wordVector, mBigramCounts[getWordIndex(mVocabulary[i])]);
