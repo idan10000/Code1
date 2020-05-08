@@ -136,8 +136,10 @@ public class WordPuzzle {
 
     public static void main(String[] args) throws Exception { //Q - 9
         Random generator = new MyRandom(new int[]{0, 1, 2, 3, 4, 5}, new float[]{0.0f, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f});
-        if (args.length == 0)
-            throwPuzzleGenerationException();
+        if (args.length == 0){
+            System.out.println("Error, no file input");
+            return;
+        }
         Scanner sysScanner = new Scanner(System.in);
         Scanner inScanner = new Scanner(new File(args[0]));
         String[] vocab = scanVocabulary(inScanner);
