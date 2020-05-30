@@ -1,4 +1,4 @@
-package riddles.src.il.ac.tau.cs.sw1.riddle.b;
+package il.ac.tau.cs.sw1.riddle.b;
 
 /**
  * Complete the code of A's methods without changing B and C.

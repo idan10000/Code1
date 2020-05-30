@@ -1,4 +1,4 @@
-package riddles.src.il.ac.tau.cs.sw1.riddle.d;
+package il.ac.tau.cs.sw1.riddle.d;
 
 public class B {
 	public static final int I = 2;

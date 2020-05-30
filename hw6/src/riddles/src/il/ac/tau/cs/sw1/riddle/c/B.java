@@ -1,4 +1,4 @@
-package riddles.src.il.ac.tau.cs.sw1.riddle.c;
+package il.ac.tau.cs.sw1.riddle.c;
 
 public class B {
 

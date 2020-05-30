@@ -1,14 +1,9 @@
-package dates.src.il.ac.tau.cs.software1.date;
+package il.ac.tau.cs.software1.date;
 
 public class DateString implements Date {
-	private int day, month, year;
 	private String date;
 	public DateString(String date) {
 		this.date = date;
-		String[] parts = date.split("/");
-		day = Integer.parseInt(parts[0]);
-		month = Integer.parseInt(parts[1]);
-		year = Integer.parseInt(parts[2]);
 	}
 	
 	@Override
@@ -18,21 +13,25 @@ public class DateString implements Date {
 
 	@Override
 	public int getDay() {
-		return day;
+		return Integer.parseInt(date.split("/")[0]);
 	}
 
 	@Override
 	public int getMonth() {
-		return month;
+		return Integer.parseInt(date.split("/")[1]);
 	}
 
 	@Override
 	public int getYear() {
-		return year;
+		return Integer.parseInt(date.split("/")[2]);
 	}
 
 	@Override
 	public void addDays(int days) {
+		String[] parts = date.split("/");
+		int day = Integer.parseInt(parts[0]);
+		int month = Integer.parseInt(parts[1]);
+		int year = Integer.parseInt(parts[2]);
 		day += days;
 		while(day > Date.getDaysInMonth(month)){
 			day -= Date.getDaysInMonth(month++);

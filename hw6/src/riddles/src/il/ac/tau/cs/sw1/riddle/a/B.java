@@ -1,4 +1,4 @@
-package riddles.src.il.ac.tau.cs.sw1.riddle.a;
+package il.ac.tau.cs.sw1.riddle.a;
 
 /**
  * Do not change this code!

@@ -1,4 +1,4 @@
-package dates.src.il.ac.tau.cs.software1.date;
+package il.ac.tau.cs.software1.date;
 
 public class DateInt implements Date {
 	private int date;
